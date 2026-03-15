@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Link from "next/link";
-import { Trash2, Download, Printer, Minus, Plus, ShoppingBag, ArrowRight, ShoppingCart } from "lucide-react";
+import { Trash2, Download, Printer, Minus, Plus, ShoppingBag, ArrowRight, ShoppingCart, Copy, Check } from "lucide-react";
 import { useStoreAuth } from "@/contexts/StoreAuthContext";
 import { OrderService } from "@/lib/services/orderService";
 import { LoyaltyService } from "@/lib/services/loyaltyService";
@@ -46,6 +46,13 @@ export default function CartPage() {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
   const [order, setOrder] = useState<Order | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const copyOrderNumber = () => {
+    navigator.clipboard.writeText(orderNumber);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   useEffect(() => {
     const cartData = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -283,7 +290,7 @@ export default function CartPage() {
           {order && (
             <div className="space-y-4 mt-2">
               <div className="p-4 rounded-xl text-sm space-y-1.5" style={{ backgroundColor: "#f5f5f0" }}>
-                <div className="flex justify-between"><span style={{ color: "#666" }}>Order Number</span><span className="font-semibold" style={{ color: "#1a1a1a" }}>{order.orderNumber}</span></div>
+                <div className="flex justify-between items-center"><span style={{ color: "#666" }}>Order Number</span><span className="flex items-center gap-1.5 font-semibold" style={{ color: "#1a1a1a" }}>{order.orderNumber}<button onClick={copyOrderNumber} className="p-1 rounded-md hover:bg-gray-200 transition-colors" title="Copy order number">{copied ? <Check className="h-3.5 w-3.5" style={{ color: "#366346" }} /> : <Copy className="h-3.5 w-3.5" style={{ color: "#888" }} />}</button></span></div>
                 <div className="flex justify-between"><span style={{ color: "#666" }}>Total</span><span className="font-semibold" style={{ color: "#BE2635" }}>Rs {order.total.toFixed(0)}</span></div>
                 <div className="flex justify-between"><span style={{ color: "#666" }}>Status</span><span className="font-semibold" style={{ color: "#d97706" }}>{order.status}</span></div>
               </div>

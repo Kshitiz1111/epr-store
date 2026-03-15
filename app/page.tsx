@@ -97,7 +97,7 @@ export default function StorePage() {
           <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/20 -translate-y-1/2 translate-x-1/4" />
           <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-white/10 translate-y-1/3 -translate-x-1/4" />
         </div>
-        <div className="container mx-auto px-4 py-8 md:py-14 relative">
+        <div className="container max-w-7xl mx-auto px-4 py-8 md:py-14 relative">
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
             <div className="flex-1 text-center md:text-left">
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight mb-3" style={{ color: "white" }}>
@@ -124,11 +124,11 @@ export default function StorePage() {
             </div>
             <div className="hidden md:block shrink-0">
               <Image
-                src="/brandlogo.png"
+                src="/heroimage.png"
                 alt="Ghimire Kitchen Wares"
-                width={180}
-                height={150}
-                className="w-44 h-auto object-contain drop-shadow-2xl opacity-90"
+                width={250}
+                height={250}
+                className="w-80 h-auto object-contain drop-shadow-2xl opacity-90"
                 priority
               />
             </div>
@@ -215,7 +215,7 @@ export default function StorePage() {
                 (sum, wh) => sum + wh.quantity,
                 0
               );
-              const hasDiscount = product.discount && product.discount > 0;
+              const hasDiscount = (product.discount ?? 0) > 0;
               const effectivePrice = hasDiscount
                 ? product.price * (1 - (product.discount || 0) / 100)
                 : product.price;

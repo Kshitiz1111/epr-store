@@ -51,8 +51,8 @@ export default function ProductDetailPage() {
       return;
     }
 
-    const effectivePrice = product.discount && product.discount > 0
-      ? product.price * (1 - product.discount / 100)
+    const effectivePrice = (product.discount ?? 0) > 0
+      ? product.price * (1 - (product.discount || 0) / 100)
       : product.price;
 
     if (existingItem) {
@@ -73,7 +73,7 @@ export default function ProductDetailPage() {
         productName: product.name,
         sku: product.sku,
         price: effectivePrice,
-        originalPrice: product.discount && product.discount > 0 ? product.price : undefined,
+        originalPrice: (product.discount ?? 0) > 0 ? product.price : undefined,
         quantity,
         imageUrl: product.imageUrl,
         totalStock,
@@ -130,7 +130,7 @@ export default function ProductDetailPage() {
   }
 
   const totalStock = Object.values(product.warehouses).reduce((sum, wh) => sum + wh.quantity, 0);
-  const hasDiscount = product.discount && product.discount > 0;
+  const hasDiscount = (product.discount ?? 0) > 0;
   const effectivePrice = hasDiscount
     ? product.price * (1 - (product.discount || 0) / 100)
     : product.price;
@@ -234,7 +234,7 @@ export default function ProductDetailPage() {
 
             {/* Add to cart section */}
             {totalStock > 0 && (
-              <div className="border-t border-gray-200 pt-5 space-y-4">
+              <div className="border-t border-gray-200 pt-5 space-y-4 hidden md:block">
                 {/* Quantity */}
                 <div className="flex items-center gap-3">
                   <span className="text-sm font-semibold" style={{ color: "#333" }}>Quantity:</span>
