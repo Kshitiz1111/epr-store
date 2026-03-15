@@ -102,6 +102,11 @@ export default function StoreLoginPage() {
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
+                <div className="text-right">
+                  <Link href="/forgot-password" className="text-xs font-medium hover:underline" style={{ color: "#BE2635" }}>
+                    Forgot password?
+                  </Link>
+                </div>
               </div>
 
               <Button
